@@ -190,8 +190,8 @@
             <code>screenY</code>). The <a>pointer-lock target</a> must receive all relevant user generated {{MouseEvent}}
             events: namely, all user-generated `mousemove`, `mousedown`, `mouseup`, `click`, `dblclick`,
             `auxclick`, and `wheel` [[ui-events]]. No other elements may receive these events while in
-            <a>pointer lock state</a>. Events that require the concept of a mouse cursor must not be dispatched. The events
-            `mouseenter`, `mouseleave`, `mouseover`, `mouseout`, `drag`, and `drop` will not be dispatched.
+            <a>pointer lock state</a>. There will be no dispatching of events that require the concept of a mouse cursor: namely,
+            `mouseenter`, `mouseleave`, `mouseover`, `mouseout`, `drag`, and `drop`.
           </p>
           <p>
             <dl data-dfn-for="PointerLockOptions" data-link-for=
@@ -327,7 +327,7 @@
             Perform the following steps:
             <ol>
               <li>
-                Return a <a href="https://heycam.github.io/webidl/#idl-promise">Promise</a></li>
+                Let <dfn>promise</dfn> be <a href="https://heycam.github.io/webidl/#a-new-promise">a new promise</a>.</li>
               </li>
               <li>
                 If the <a href="https://heycam.github.io/webidl/#this">this</a>'s
@@ -347,7 +347,10 @@
                       <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                     </li>
                     <li>
-                      <a>Reject</a> the promise with a "{{WrongDocumentError}}" {{DOMException}}.
+                      <a>Reject</a> <a>promise</a> with a "{{WrongDocumentError}}" {{DOMException}}.
+                    </li>
+                    <li>
+                      Return <a>promise</a>.
                     </li>
                   </ol>
                 </ol>
@@ -367,7 +370,10 @@
                       <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                     </li>
                     <li>
-                      <a>Reject</a> the promise with a "{{InvalidStateError}}" {{DOMException}}.
+                      <a>Reject</a> <a>promise</a> with a "{{InvalidStateError}}" {{DOMException}}.
+                    </li>
+                    <li>
+                      Return <a>promise</a>.
                     </li>
                   </ol>
                 </ol>
@@ -396,7 +402,23 @@
                           <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                         </li>
                         <li>
-                          <a>Reject</a> the promise with a "{{NotSupportedError}}" {{DOMException}}.
+                          <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                            Queue an element task</a> on the 
+                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                            User Interaction task source</a>, given this, to perform the following steps:
+                            <ol type='i'>
+                              <li>
+                                <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                                <a>pointerlockerror</a> at <a>this</a>'s 
+                                <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                              </li>
+                              <li>
+                                The <a>promise</a> must be resolved.
+                              </li>
+                              <li>
+                                Return <a>promise</a>.
+                              </li>
+                            </ol>
                         </li>
                       </ol>
                     </ol>
@@ -409,25 +431,34 @@
                         Update the user agent's <a>pointer-lock target</a> to this element.
                       </li>
                       <li>
-                        The user agent's <a>pointer-lock target</a> must be updated to this element
-                      </li>
-                      <li>
                         Update the user agent's <a>pointer-lock options</a> to <a>options</a>
                       </li>
                       <li>
-                        a <a>pointerlockchange</a> event must be sent
-                      </li>
-                      <li>
-                        the promise must <a>resolve</a>
+                        <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                          Queue an element task</a> on the 
+                          <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                          User Interaction task source</a>, given this, to perform the following steps:
+                          <ol type='i'>
+                            <li>
+                              <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                              <a>pointerlockerror</a> at <a>this</a>'s 
+                              <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                            </li>
+                            <li>
+                              The <a>promise</a> must be resolved.
+                            </li>
+                            <li>
+                              Return <a>promise</a>.
+                            </li>
+                          </ol>
                       </li>
                     </ol>
                   </li>
                 </ol>
               </li>
               <li>
-                If any element (including this one), whose <a>shadow-including
-                root</a> is same as this element's <a>shadow-including root</a> and, is
-                already locked (or pending lock) then perform the following steps
+                If the user agent's current pointer-lock target's shadow-including root is the
+                same as this element's shadow-including root, then:
                 <ol type='i'>
                   <li>
                     The user agent's <a>pointer-lock target</a> must be updated to this element
@@ -456,7 +487,10 @@
                       <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                     </li>
                     <li>
-                      <a>Reject</a> the promise with a "{{NotAllowedError}}" {{DOMException}}.
+                      <a>Reject</a> <a>promise</a> with a "{{NotAllowedError}}" {{DOMException}}.
+                    </li>
+                    <li>
+                      Return <a>promise</a>.
                     </li>
                   </ol>
                 </ol>
@@ -498,7 +532,10 @@
                       <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                     </li>
                     <li>
-                      <a>Reject</a> the promise with a "{{SecurityError}}" {{DOMException}}.
+                      <a>Reject</a> <a>promise</a> with a "{{SecurityError}}" {{DOMException}}.
+                    </li>
+                    <li>
+                      Return <a>promise</a>.
                     </li>
                   </ol>
                 </ol>
@@ -520,7 +557,10 @@
                         <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                       </li>
                       <li>
-                        <a>Reject</a> the promise with a "{{NotSupportedError}}" {{DOMException}}.
+                        <a>Reject</a> <a>promise</a> with a "{{NotSupportedError}}" {{DOMException}}.
+                      </li>
+                      <li>
+                        Return <a>promise</a>.
                       </li>
                     </ol>
                   </ol>
@@ -563,12 +603,15 @@
                           <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                         </li>
                         <li>
-                          <a>Resolve</a> the promise.
+                          <a>Resolve</a> the <a>promise</a>.
                         </li>
                       </ol>
                     </li>
                   </ol>
                 </dl>
+              </li>
+              <li>
+                Return <a>promise</a>.
               </li>
             </ol>
           </p>
@@ -611,11 +654,13 @@
         <dd>
           <ol>
             <li>
+              If the user agent's pointer-lock target is null, then return.
+            </li>
+            <li>
               If <a>pointer-lock target</a>'s <a>shadow-including root</a> is not equal to <a>this</a>'s <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>, return.
             </li>
             <li>
-              if currently locked to a target whose <a>shadow-including root</a> is this document <a>exit pointer lock</a>
-              with the <a>pointer-lock target</a>.
+              <a>Exit pointer lock</a> with the user agent's <a>pointer-lock target</a>.
             </li>
           </ol>
         </dd>
