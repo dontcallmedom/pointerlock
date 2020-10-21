@@ -177,18 +177,18 @@
       </h2>
       <section>
         <h3>
-          The <dfn>pointer lock state</dfn> Definition
+          The <dfn>pointer lock state</dfn> definition
         </h3>
           <p><a>Pointer lock state</a> is the state where a single DOM element, which
             we will call the <dfn>pointer-lock target</dfn>, receives all mouse events and the cursor
             is hidden.</p>
           <p>
             Once in the <a>pointer lock state</a> the <a>user agent</a> has a
-            <a>pointer-lock target</a>, a <dfn>pointer-lock options</dfn>, which is a <a>PointerLockOptions</a> and, a
+            <a>pointer-lock target</a>, a <dfn>pointer-lock options</dfn>, which is a <a>PointerLockOptions</a> and a
             <dfn>cursor position</dfn> which is a pair of numbers representing the location of the system mouse
-            cursor when the Pointer Lock State was entered(the same location that is reported in <code>screenX</code>,
+            cursor when the Pointer Lock State was entered (the same location that is reported in <code>screenX</code>,
             <code>screenY</code>). The <a>pointer-lock target</a> must receive all relevant user generated {{MouseEvent}}
-            events. The <a>pointer-lock target</a> will receive all `mousemove`, `mousedown`, `mouseup`, `click`, `dblclick`,
+            events: namely, all user-generated `mousemove`, `mousedown`, `mouseup`, `click`, `dblclick`,
             `auxclick`, and `wheel` [[ui-events]]. No other elements may receive these events while in
             <a>pointer lock state</a>. Events that require the concept of a mouse cursor must not be dispatched. The events
             `mouseenter`, `mouseleave`, `mouseover`, `mouseout`, `drag`, and `drop` will not be dispatched.
@@ -279,7 +279,7 @@
             <li>
               <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                 Queue an element task</a>, given this element, on the <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  User Interaction task source</a> to do the following:
+                  user Interaction task source</a> to do the following:
                   <ol><li>
                     <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
                     <a>pointerlockchange</a> at the given element's
@@ -287,8 +287,8 @@
                   </li></ol>
             </li>
             <li>
-              Exit the <a>Pointer Lock State</a> by setting <a>Pointer-lock target</a>, <a>PointerLockOptions</a>
-              and, <a>cursor position</a> to null.
+              Exit the <a>pointer lock state</a> by setting <a>pointer-lock target</a>, <a>pointer-lock options</a>,
+              and <a>cursor position</a> to null.
             </li>
           </ol>
         </p>
@@ -304,7 +304,7 @@
       </p>
       <pre class="idl">
         partial interface Element {
-          Promise&lt;void> requestPointerLock(optional PointerLockOptions options = {});
+          Promise&lt;undefined> requestPointerLock(optional PointerLockOptions options = {});
         };
       </pre>
       <pre class='example' id="example-synthetic-cursor">
@@ -339,7 +339,7 @@
                   1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                   Queue an element task</a> on the 
                   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  user Interaction task source</a>, given this, to perform the following steps:
+                  user interaction task source</a>, given this, to perform the following steps:
                   <ol>
                     <li>
                       <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
@@ -359,7 +359,7 @@
                   1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                   Queue an element task</a> on the 
                   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  User Interaction task source</a>, given this, to perform the following steps:
+                  user interaction task source</a>, given this, to perform the following steps:
                   <ol type='i'>
                     <li>
                       <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
@@ -374,7 +374,7 @@
               </li>
               <li>
                 If the user agent's <a>pointer-lock target</a>'s <a>shadow-including
-                root</a> is equal to <a>this</a>'s <a>shadow-including root</a> follow these steps:
+                root</a> is equal to <a>this</a>'s <a>shadow-including root</a>, then:
                 <ol>
                   <li>
                     If <a>options</a> are equivalent to the current <a>pointer-lock options</a> then the <a>pointer-lock target</a>
@@ -383,12 +383,12 @@
                   </li>
                   <li>
                     If <a>options</a> are not equivalent to the user agent's current
-                    <a>pointerLockOptions</a> and <a>options</a> are not supported:
+                    <a>pointer-lock options</a> and <a>options</a> are not supported:
                     <ol>
                       1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                       Queue an element task</a> on the 
                       <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                      User Interaction task source</a>, given this, to perform the following steps:
+                      user interaction task source</a>, given this, to perform the following steps:
                       <ol type='i'>
                         <li>
                           <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
@@ -404,15 +404,15 @@
                   <li>
                     If <a>options</a> are not equivalent to the current <a>pointer-lock options</a> and 
                     <a>options</a> are supported then perform the following steps
-                    <ol type='i'>
+                    <ol>
                       <li>
-                        The user agent's <a>pointer-lock target</a> must be updated to this element
+                        Update the user agent's <a>pointer-lock target</a> to this element.
                       </li>
                       <li>
                         The user agent's <a>pointer-lock target</a> must be updated to this element
                       </li>
                       <li>
-                        The current <a>pointer-lock options</a> must be updated to <a>options</a>
+                        Update the user agent's <a>pointer-lock options</a> to <a>options</a>
                       </li>
                       <li>
                         a <a>pointerlockchange</a> event must be sent
@@ -448,7 +448,7 @@
                   1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                   Queue an element task</a> on the 
                   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  User Interaction task source</a>, given this, to perform the following steps:
+                  user interaction task source</a>, given this, to perform the following steps:
                   <ol type='i'>
                     <li>
                       <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
@@ -490,7 +490,7 @@
                   1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                   Queue an element task</a> on the 
                   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  User Interaction task source</a>, given this, to perform the following steps:
+                  user interaction task source</a>, given this, to perform the following steps:
                   <ol type='i'>
                     <li>
                       <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
@@ -538,25 +538,25 @@
                   If none of the above errors have occured
                   <ol>
                     <li>
-                      Enter <a>pointer lock state</a> by performing the following
+                      Enter <a>pointer lock state</a> by performing the following:
                     </li>
                     <ol>
                       <li>
-                        set the user agent's <a>pointer-lock target</a> to the requesting element
+                        Set the user agent's <a>pointer-lock target</a> to <a>this</a>.
                       </li>
                       <li>
-                        set the user agent's <a>cursor position</a> to the current system mouse location.
+                        Set the user agent's <a>cursor position</a> to the current system mouse location.
                       </li>
                       <li>
-                        set the <a>pointer-lock options</a>, to <a>options</a>.
+                        Set the <a>pointer-lock options</a> to <a>options</a>.
                       </li>
                     </ol>
                     <li>
                       <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
                       Queue an element task</a> on the
                       <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                      User Interaction task source</a>, given this, to perform the following steps:
-                      <ol type='i'>
+                      user interaction task source</a>, given this, to perform the following steps:
+                      <ol>
                         <li>
                           <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
                           <a>pointerlockchange</a> at <a>this</a>'s 
@@ -611,7 +611,7 @@
         <dd>
           <ol>
             <li>
-              If <a>pointer-lock target</a> is not in the same <a>shadow-including root</a> as <a>this</a>'s document, return.
+              If <a>pointer-lock target</a>'s <a>shadow-including root</a> is not equal to <a>this</a>'s <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>, return.
             </li>
             <li>
               if currently locked to a target whose <a>shadow-including root</a> is this document <a>exit pointer lock</a>
@@ -786,7 +786,7 @@
       </h2>
       <p>
         A <dfn>default unlock gesture</dfn> must always be available that will
-        <a>exit pointer lock</a> with the User Agent's <a>pointer-lock target</a>.
+        <a>exit pointer lock</a> with the user agent's <a>pointer-lock target</a>.
       </p>
       <aside class="note">
         <p>
@@ -1004,7 +1004,7 @@
         calls.
         </li>
         <li>Changing to new tabs, windows, or any other action that causes a
-        page to lose focus will <a>exit pointer lock</a> with the User Agent's <a>pointer-lock target</a>.
+        page to lose focus will <a>exit pointer lock</a> with the user agent's <a>pointer-lock target</a>.
         </li>
         <li>Pointer lock can only be engaged when the window is in focus in the
         user agent and operating system.
@@ -1014,7 +1014,7 @@
         Recommendations:
       </p>
       <ul>
-        <li>Esc key should <a>exit pointer lock</a> with the User Agent's <a>pointer-lock target</a>.
+        <li>Esc key should <a>exit pointer lock</a> with the user agent's <a>pointer-lock target</a>.
         </li>
         <li>Preferences per sub-domain can be used to allow or block pointer
         lock, similar to pop-up, geolocation, and fullscreen.
@@ -1083,7 +1083,7 @@
         </h2>
         <p>
           When the pointer is locked 'wheel' events should be sent to the
-          pointer lock <a>pointer-lock target</a> element just as 'mousemove' events are.
+          <a>pointer-lock target</a> element just as 'mousemove' events are.
           There is a naming conflict with .deltaX/Y/Z as defined in <a href=
           "http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#events-wheelevents">
           DOM 3 'wheel' event</a>.
