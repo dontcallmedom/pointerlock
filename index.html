@@ -327,55 +327,59 @@
             Perform the following steps:
             <ol>
               <li>
-                Let <dfn>promise</dfn> be <a href="https://heycam.github.io/webidl/#a-new-promise">a new promise</a>.</li>
+                Let <var>promise</var> be <a href="https://heycam.github.io/webidl/#a-new-promise">a new promise</a>.</li>
               </li>
               <li>
                 If the <a href="https://heycam.github.io/webidl/#this">this</a>'s
                 <a>shadow-including root</a> is the <a>active document</a> of a
-                [=Document/browsing context=] which is (or has an <a>ancestor
-                browsing context</a> which is) in focus by a window which is in
+                [=Document/browsing context=] which is not (or has an <a>ancestor
+                browsing context</a> which is not) in focus by a window which is in
                 focus by the operating system's window manager:
                 <ol>
-                  1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                  Queue an element task</a> on the 
-                  <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  user interaction task source</a>, given this, to perform the following steps:
-                  <ol>
-                    <li>
-                      <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                      <a>pointerlockerror</a> at <a>this</a>'s 
-                      <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                    </li>
-                    <li>
-                      <a>Reject</a> <a>promise</a> with a "{{WrongDocumentError}}" {{DOMException}}.
-                    </li>
-                    <li>
-                      Return <a>promise</a>.
-                    </li>
-                  </ol>
+                  <li>
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                    Queue an element task</a> on the
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                    user interaction task source</a>, given this, to perform the following steps:
+                    <ol>
+                      <li>
+                        <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                        <a>pointerlockerror</a> at <a>this</a>'s
+                        <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                      </li>
+                      <li>
+                        <a>Reject</a> <var>promise</var> with a "{{WrongDocumentError}}" {{DOMException}}.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    Return <var>promise</var>.
+                  </li>
                 </ol>
               </li>
               <li>
                 If the user agent's <a>pointer-lock target</a> is an element whose <a>shadow-including root</a> is
                 not equal to <a>this</a>'s <a>shadow-including root</a>, then:
                 <ol>
-                  1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                  Queue an element task</a> on the 
-                  <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  user interaction task source</a>, given this, to perform the following steps:
-                  <ol type='i'>
-                    <li>
-                      <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                      <a>pointerlockerror</a> at <a>this</a>'s 
-                      <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                    </li>
-                    <li>
-                      <a>Reject</a> <a>promise</a> with a "{{InvalidStateError}}" {{DOMException}}.
-                    </li>
-                    <li>
-                      Return <a>promise</a>.
-                    </li>
-                  </ol>
+                  <li>
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                    Queue an element task</a> on the 
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                    user interaction task source</a>, given this, to perform the following steps:
+                    <ol type='i'>
+                      <li>
+                        <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                        <a>pointerlockerror</a> at <a>this</a>'s
+                        <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                      </li>
+                      <li>
+                        <a>Reject</a> <var>promise</var> with a "{{InvalidStateError}}" {{DOMException}}.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    Return <var>promise</var>.
+                  </li>
                 </ol>
               </li>
               <li>
@@ -383,44 +387,47 @@
                 root</a> is equal to <a>this</a>'s <a>shadow-including root</a>, then:
                 <ol>
                   <li>
-                    If <a>options</a> are equivalent to the current <a>pointer-lock options</a> then the <a>pointer-lock target</a>
-                    must be updated to this element, a <a>pointerlockchange</a>
-                    event sent, and the promise must <a>resolve</a>.
+                    If <a>options</a> are equivalent to the current <a>pointer-lock options</a>
+                    <ol>
+                      <li>
+                        Set <a>pointer-lock target</a> to <a>this</a>
+                      </li>
+                      <li>
+                        <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                        Queue an element task</a> on the
+                        <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                        user interaction task source</a>, given this, to perform the following steps:
+                        <ol>
+                          <li>
+                            <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                            <a>pointerlockchange</a> at <a>this</a>'s 
+                            <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                          </li>
+                          <li>
+                            <a>Resolve</a> the <var>promise</var>.
+                          </li>
+                        </ol>
+                      </li>
+                    </ol>
                   </li>
                   <li>
                     If <a>options</a> are not equivalent to the user agent's current
                     <a>pointer-lock options</a> and <a>options</a> are not supported:
                     <ol>
-                      1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                      Queue an element task</a> on the 
-                      <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                      user interaction task source</a>, given this, to perform the following steps:
-                      <ol type='i'>
-                        <li>
-                          <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                          <a>pointerlockerror</a> at <a>this</a>'s 
-                          <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                        </li>
-                        <li>
-                          <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                            Queue an element task</a> on the 
-                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                            User Interaction task source</a>, given this, to perform the following steps:
-                            <ol type='i'>
-                              <li>
-                                <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                                <a>pointerlockerror</a> at <a>this</a>'s 
-                                <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                              </li>
-                              <li>
-                                The <a>promise</a> must be resolved.
-                              </li>
-                              <li>
-                                Return <a>promise</a>.
-                              </li>
-                            </ol>
-                        </li>
-                      </ol>
+                      <li>
+                        <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                        Queue an element task</a> on the
+                        <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                        user interaction task source</a>, given this, to perform the following steps:
+                        <ol type='i'>
+                          <li>
+                            <a>Reject</a> <var>promise</var> with a "{{NotSupportedError}}" {{DOMException}}.
+                          </li>
+                        </ol>
+                      </li>
+                      <li>
+                        Return <var>promise</var>.
+                      </li>
                     </ol>
                   </li>
                   <li>
@@ -441,33 +448,18 @@
                           <ol type='i'>
                             <li>
                               <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                              <a>pointerlockerror</a> at <a>this</a>'s 
+                              <a>pointerlockchange</a> at <a>this</a>'s
                               <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                             </li>
                             <li>
-                              The <a>promise</a> must be resolved.
-                            </li>
-                            <li>
-                              Return <a>promise</a>.
+                              The <var>promise</var> must be resolved.
                             </li>
                           </ol>
                       </li>
+                      <li>
+                        Return <var>promise</var>.
+                      </li>
                     </ol>
-                  </li>
-                </ol>
-              </li>
-              <li>
-                If the user agent's current pointer-lock target's shadow-including root is the
-                same as this element's shadow-including root, then:
-                <ol type='i'>
-                  <li>
-                    The user agent's <a>pointer-lock target</a> must be updated to this element
-                  </li>
-                  <li>
-                    a <a>pointerlockchange</a> event must be sent
-                  </li>
-                  <li>
-                    the promise must <a>resolve</a>
                   </li>
                 </ol>
               </li>
@@ -476,23 +468,25 @@
                 the Document has not previously released a successful Pointer Lock with 
                 {{Document/exitPointerLock()}}:
                 <ol>
-                  1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                  Queue an element task</a> on the 
-                  <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  user interaction task source</a>, given this, to perform the following steps:
-                  <ol type='i'>
-                    <li>
-                      <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                      <a>pointerlockerror</a> at <a>this</a>'s 
-                      <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                    </li>
-                    <li>
-                      <a>Reject</a> <a>promise</a> with a "{{NotAllowedError}}" {{DOMException}}.
-                    </li>
-                    <li>
-                      Return <a>promise</a>.
-                    </li>
-                  </ol>
+                  <li>
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                    Queue an element task</a> on the
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                    user interaction task source</a>, given this, to perform the following steps:
+                    <ol type='i'>
+                      <li>
+                        <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                        <a>pointerlockerror</a> at <a>this</a>'s
+                        <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                      </li>
+                      <li>
+                        <a>Reject</a> <var>promise</var> with a "{{NotAllowedError}}" {{DOMException}}.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    Return <var>promise</var>.
+                  </li>
                 </ol>
                 <aside class="note">
                   <p>
@@ -521,23 +515,25 @@
                 sandboxing flag set</a> has the <a>sandboxed pointer lock browsing
                 context flag</a> set:
                 <ol>
-                  1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                  Queue an element task</a> on the 
-                  <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                  user interaction task source</a>, given this, to perform the following steps:
-                  <ol type='i'>
-                    <li>
-                      <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                      <a>pointerlockerror</a> at <a>this</a>'s 
-                      <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                    </li>
-                    <li>
-                      <a>Reject</a> <a>promise</a> with a "{{SecurityError}}" {{DOMException}}.
-                    </li>
-                    <li>
-                      Return <a>promise</a>.
-                    </li>
-                  </ol>
+                  <li>
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                    Queue an element task</a> on the
+                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                    user interaction task source</a>, given this, to perform the following steps:
+                    <ol type='i'>
+                      <li>
+                        <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                        <a>pointerlockerror</a> at <a>this</a>'s
+                        <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                      </li>
+                      <li>
+                        <a>Reject</a> <var>promise</var> with a "{{SecurityError}}" {{DOMException}}.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    Return <var>promise</var>.
+                  </li>
                 </ol>
               </li>
               <li>
@@ -546,23 +542,25 @@
                   If <a>options</a>["<a>unadjustedMovement</a>"] is true and the platform does not
                   support <a>unadjustedMovement</a>:
                   <ol>
-                    1. <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
-                    Queue an element task</a> on the 
-                    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
-                    User Interaction task source</a>, given this, to perform the following steps:
-                    <ol type='i'>
-                      <li>
-                        <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
-                        <a>pointerlockerror</a> at <a>this</a>'s 
-                        <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
-                      </li>
-                      <li>
-                        <a>Reject</a> <a>promise</a> with a "{{NotSupportedError}}" {{DOMException}}.
-                      </li>
-                      <li>
-                        Return <a>promise</a>.
-                      </li>
-                    </ol>
+                    <li>
+                      ><a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-an-element-task">
+                      Queue an element task</a> on the
+                      <a href="https://html.spec.whatwg.org/multipage/webappapis.html#user-interaction-task-source">
+                      User Interaction task source</a>, given this, to perform the following steps:
+                      <ol type='i'>
+                        <li>
+                          <a href=https://dom.spec.whatwg.org/#concept-event-fire">Fire an event</a> named
+                          <a>pointerlockerror</a> at <a>this</a>'s
+                          <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
+                        </li>
+                        <li>
+                          <a>Reject</a> <var>promise</var> with a "{{NotSupportedError}}" {{DOMException}}.
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      Return <var>promise</var>.
+                    </li>
                   </ol>
                 </dl>
                 <aside class="note" data-link-for="Document">
@@ -603,7 +601,7 @@
                           <a href="https://dom.spec.whatwg.org/#concept-node-document">node document</a>.
                         </li>
                         <li>
-                          <a>Resolve</a> the <a>promise</a>.
+                          <a>Resolve</a> the <var>promise</var>.
                         </li>
                       </ol>
                     </li>
@@ -611,7 +609,7 @@
                 </dl>
               </li>
               <li>
-                Return <a>promise</a>.
+                Return <var>promise</var>.
               </li>
             </ol>
           </p>
